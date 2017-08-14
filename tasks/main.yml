@@ -1,0 +1,37 @@
+---
+# tasks file for ansible-test
+#
+
+- name: Run a command
+  shell: "pwd"
+  register: command_ret
+  changed_when: false
+
+- debug: var=command_ret
+
+- name: Run whoami
+  shell: "whoami"
+  register: whoami_ret
+  changed_when: false
+
+- debug: var=whoami_ret
+
+- name: Run whoami become
+  shell: "whoami"
+  register: whoami_become_ret
+  become: true
+  changed_when: false
+
+- debug: var=whoami_become_ret
+
+- name: Create a file in the home directory
+  copy:
+    content: ""
+    dest: ~/test.txt
+
+- name: Create a file in a root write only direcotry.
+  copy:
+    content: ""
+    dest: /test.text
+  become: true
+
